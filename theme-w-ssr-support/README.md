@@ -1,6 +1,6 @@
 ![logo](public/logo.svg)
 # WPGraphQL Theme with Server-Side Rendering
-An example wordpress theme that loads a React.js SPA and retrieved data from WPGraphQL using WPGraphQL Composer component library. The SPA is loaded server-side using the [spatie/server-side-rendering]() package's Node engine.
+An example wordpress theme that loads a React.js SPA and retrieved data from WPGraphQL using WPGraphQL Composer component library. The SPA is loaded server-side using the [spatie/server-side-rendering](https://github.com/spatie/server-side-rendering) package's Node engine. It also contains examples of for modifying WPGraphQL's schema.
 
 ## Features
 - Docker compose file for testing.
