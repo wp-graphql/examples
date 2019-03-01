@@ -4,6 +4,7 @@
   "description": "Example WordPress theme that loads an React app and serves data using WPGraphQL",
   "private": true,
   "scripts": {
+    "link-wp": "node scripts/symlink-local.js",
     "docker-vols": "node scripts/volumes.js",
     "start-docker": "docker-compose up -d --build",
     "stop-docker": "docker-compose down",
