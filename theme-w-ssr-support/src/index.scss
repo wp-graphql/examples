@@ -1,0 +1,83 @@
+/*
+  Theme Name: AxisTaylor
+  Theme URI: https://axistaylor.com/
+  Author: kidunot89
+  Author URI: https://axistaylor.com/
+  Description: Theme for https://axistaylor.com.
+  Version: 1.0.0
+  Text Domain: axistaylor
+*/
+
+/**
+ * Imports
+ */
+@import '~normalize-scss/sass/normalize';
+
+body {
+  margin: 0;
+  padding: 0;
+
+  font-size: calc(10px + 2vmin);
+  font-family: 'Aleo', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  * {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    -o-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  --base: transparent;
+  --primary: #068587;
+  --primary-dark: #112f41;
+  --primary-light: #4fb99f;
+  --accent-one: #f2b134;
+  --accent-two: #ed553b;
+  --white: #f4f4f4;
+  --black: #1c1f20;
+  --gray: #c8c8c8;
+
+  background-color: var(--black);
+  color: var(--white);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+p, li, span { 
+  font-size: 1.1em;
+  line-height: 1.5em;
+}
+
+a {
+  text-decoration: none;
+  color: var(--accent-one);
+
+  transition: color 650 ease;
+
+  &:hover,
+  &:active {
+    color: var(--accent-two);
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Abril Fatface', cursive;
+}
+
+#root {
+  position: relative;
+  margin: 0;
+}
+
+@media screen and (min-width: 1024px) {
+  p {
+    font-size: 0.78em;
+    line-height: 2em;
+  }
+}

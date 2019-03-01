@@ -1,0 +1,34 @@
+version: "3.3"
+services:
+  wordpress-node:
+    build:
+      context: .
+      args:
+        NODE_VERSION: "11"
+        WORDPRESS_VERSION: "5.0.3"
+        PHP_VERSION: "7.2"
+    depends_on:
+      - mysql
+    image: wordpress-node
+    ports:
+      - 8088:80
+    environment:
+      NODE_PATH: "/usr/bin/node"
+      WORDPRESS_DB_HOST: "mysql"
+      WORDPRESS_DB_NAME: "wordpress"
+      WORDPRESS_DB_PASSWORD: "testing"
+      WORDPRESS_DB_USER: "root"
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_CONFIG_EXTRA: |
+        define( 'WP_DEBUG_LOG', true );
+    volumes:
+      - "./_dev/wp-graphql:/var/www/html/wp-content/plugins/wp-graphql:ro"
+      - "./_dev/wp-graphiql:/var/www/html/wp-content/plugins/wp-graphiql:ro"
+      - "./_dev/wp-graphql-jwt-authentication:/var/www/html/wp-content/plugins/wp-graphql-jwt-authentication:ro"
+      - "./build:/var/www/html/wp-content/themes/wp-graphql-theme:ro"
+  mysql:
+    image: "mariadb:10.2"
+    restart: always
+    environment:
+      MYSQL_DATABASE: "wordpress"
+      MYSQL_ROOT_PASSWORD: "testing"
