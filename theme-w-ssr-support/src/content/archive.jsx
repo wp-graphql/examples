@@ -12,30 +12,31 @@ import { archive } from 'wp-graphql-composer';
 import Waypoint from '../components/waypoint';
 import Section from '../components/posed-elements';
 import colors from '../lib/colors';
-import resultView from './post'
+import resultView from './post';
 
 const nextColor = (i) => {
-  switch(i % 3) {
+  switch (i % 3) {
     case 0:
       return {
         bgColor: colors.primaryLight,
-        color: colors.white
+        color: colors.white,
       };
     case 1:
       return {
         bgColor: colors.primaryDark,
-        color: colors.white
+        color: colors.white,
       };
     default:
       return { color: colors.white };
   }
-}
+};
 
+/* eslint react/prop-types: 0 */
 const view = ({
   resultView: Result,
   header,
   noHeader,
-  resultsData
+  resultsData,
 }) => {
   const style = { minHeight: resultsData.length === 1 ? '95vh' : '45vh' };
 
@@ -57,4 +58,4 @@ const view = ({
   );
 };
 
-export default archive.compose({ view, resultView, });
+export default archive.compose({ view, resultView });

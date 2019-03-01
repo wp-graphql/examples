@@ -12,8 +12,10 @@ import page from './page';
 import post from './post';
 
 const components = { archive, page, post };
+
+/* eslint react/prop-types: 0 */
 const view = ({ Routes }) => (
-    <Routes {...components} />
+  <Routes {...components} />
 );
 
 export default main.compose({ view });

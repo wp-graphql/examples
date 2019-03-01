@@ -3,8 +3,8 @@
  * External dependencies
  */
 import React from 'react';
+import ReactHtmlParser from 'react-html-parser';
 import { page } from 'wp-graphql-composer';
-import ReactHtmlParser from 'react-html-parser'
 
 /**
  * Local dependencies
@@ -12,8 +12,11 @@ import ReactHtmlParser from 'react-html-parser'
 
 import Section from '../components/posed-elements';
 
-const view = ({ pageId, title, content, className, style }) => (
-  <Section id={`page-${pageId}`} className={className} style={ style }>
+/* eslint react/prop-types: 0 */
+const view = ({
+  pageId, title, content, className, style,
+}) => (
+  <Section id={`page-${pageId}`} className={className} style={style}>
     <h2>{title}</h2>
     <div className="entry-content">
       {ReactHtmlParser(content)}

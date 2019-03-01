@@ -15,7 +15,6 @@ const StyledSection = styled.section.attrs(({
   alignItems: align || 'center',
 }))`
   position: relative;
-  overflow: hidden;
   display: ${props => props.display};
   flex-direction: ${props => props.flexDirection};
   flex-wrap: ${props => props.flexWrap};

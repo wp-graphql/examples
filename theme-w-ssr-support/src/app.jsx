@@ -3,9 +3,7 @@
 /**
  * External dependencies
  */
-import React, { Fragment, useState, useEffect } from 'react';
-import { HttpLink } from 'apollo-link-http';
-import { WPProvider } from 'wp-graphql-composer';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -23,25 +21,12 @@ const Main = styled.main`
   min-height: 100vh;
 `;
 
-const App = ({ endpoint }) => {
-  const [httpLink, setLink] = useState(null);
-  useEffect(() => {
-    if (!httpLink) {
-      setLink(new HttpLink({ uri: endpoint, credentials: 'same-origin' }));
-    }
-  });
-
-  return httpLink && (
-    <WPProvider link={httpLink}>
-      <Fragment>
-        <Navbar location="MAIN" />
-        <Main>
-          <Content />
-        </Main>
-        <Footer />
-      </Fragment>
-    </WPProvider>
-  );
-};
-
-export default App;
+export default () => (
+  <Fragment>
+    <Navbar location="MAIN" />
+    <Main>
+      <Content />
+    </Main>
+    <Footer />
+  </Fragment>
+);

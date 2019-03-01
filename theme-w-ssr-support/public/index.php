@@ -14,11 +14,11 @@ $app = json_decode(
   $renderer
     ->entry( $context[ 'SERVER_SCRIPT_PATH' ] )
     ->context( $context )
+    ->fallback( '<div id="root"></div>' )
     ->debug()
     ->render(),
   true
 );
-
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -35,7 +35,7 @@ $app = json_decode(
   </head>
   <body <?php body_class(); ?>>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"><?php echo $app['markup']; ?></div>
+    <?php echo $app['markup']; ?>
     <?php wp_footer(); ?>
   </body>
 </html>

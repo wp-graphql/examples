@@ -19,6 +19,7 @@
     "apollo-link-http": "^1.5.11",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
+    "cross-fetch": "^3.0.1",
     "graphql": "^14.1.1",
     "lodash": "^4.17.11",
     "normalize-scss": "^7.0.1",
