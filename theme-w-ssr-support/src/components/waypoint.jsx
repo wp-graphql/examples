@@ -24,6 +24,10 @@ const StyledContainer = styled.div`
   perspective-origin: top left;
   background-color: ${colors.base};
   color: ${colors.base};
+  a {/* eslint no-confusing-arrow: 0 */
+    ${({ color }) => (!process.browser || color === colors.base) && 'color: inherit !important;'}
+    transition: color 700ms ease;
+  }
 `;
 
 const PosedContainer = posed(StyledContainer)({

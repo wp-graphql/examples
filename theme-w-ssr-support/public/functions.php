@@ -131,7 +131,7 @@ function wp_graphql_url_exists( $url ){
 	return stripos( $headers[ 0 ],"200 OK" ) ? true : false;
 }
 
-function wp_graphql_get_context(){
+function wp_graphql_get_context( $server = false ){
 	global $app_context;
 	$request_uri = $_SERVER['REQUEST_URI'];
 
@@ -145,11 +145,15 @@ function wp_graphql_get_context(){
 			'VENDOR_SCRIPT_URI' 	=> get_template_directory_uri() . '/js/vendors~main.client.js',
 			'STYLE_URI' 					=> get_template_directory_uri() . '/js/main.css',
 			'AJAX_URL'						=> admin_url( 'admin-ajax.php' ),
-			'ENDPOINT' 						=> '/' . apply_filters( 'graphql_endpoint', 'graphql' ),
 		];
 	}
 
-	return $app_context;
+	return array_merge(
+		$app_context,
+		[
+			'ENDPOINT' => ( $server ? 'http://127.0.0.1/' : home_url( '/' ) ) . apply_filters( 'graphql_endpoint', 'graphql' ),
+		]
+	);
 }
 
 /**

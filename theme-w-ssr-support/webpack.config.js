@@ -144,7 +144,6 @@ const rules = [
       {
         loader: 'file-loader',
         options: {
-          outputPath: (url, resourcePath, context) => path.relative(context, resourcePath),
           name: '/images/[name].[ext]',
         },
       },
@@ -164,25 +163,23 @@ const resolve = {
  * Webpack configurations
  */
 module.exports = [
+  // Server-side PHP
   {
-    entry: './src/server.jsx',
+    entry: './src/server/index.js',
     output: {
       pathinfo: true,
       filename: 'server.js',
       path: buildPath,
     },
-    plugins: [
-      ...plugins,
-      new webpack.DefinePlugin({
-        __isBrowser__: false,
-      }),
-    ],
+    plugins,
     module: { rules },
     resolve,
     devtool: 'cheap-eval-source-map',
     stats: 'minimal',
+    target: 'node',
     watch,
   },
+  // Client-side
   {
     entry: './src/client.jsx',
     output: {
@@ -190,19 +187,16 @@ module.exports = [
       filename: 'client.js',
       path: buildPath,
     },
-    plugins: [
-      ...plugins,
-      new webpack.DefinePlugin({
-        __isBrowser__: true,
-      }),
-    ],
+    plugins,
     module: { rules },
     resolve,
     devtool: 'cheap-eval-source-map',
     stats: 'minimal',
     watch,
     optimization: {
-      splitChunks: { chunks: 'all' },
+      splitChunks: {
+        chunks: 'all',
+      },
     },
   },
 ];

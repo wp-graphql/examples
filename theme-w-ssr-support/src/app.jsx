@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import Navbar from './nav-menu';
 import Footer from './footer';
 import Content from './content';
+import './index.scss';
 
 const Main = styled.main`
   position: relative;
