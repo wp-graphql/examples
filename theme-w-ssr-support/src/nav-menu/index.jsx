@@ -6,7 +6,6 @@
 import React, { Fragment, useState, useRef } from 'react';
 import { map } from 'lodash';
 import posed from 'react-pose';
-import { withRouter } from 'react-router-dom';
 import { menu } from 'wp-graphql-composer';
 
 /**
@@ -62,5 +61,4 @@ export default menu.compose({
   view,
   whileLoading: { view: () => null },
   forError: { view: () => null },
-  extraHOCs: [withRouter],
 });

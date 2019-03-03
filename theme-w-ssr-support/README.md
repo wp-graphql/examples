@@ -26,7 +26,7 @@ The `link-wp` script simply symlinks links the required project directories into
 - Or Manually symlink all the directories. This means the three sub-directories in the `_dev` directory point to the plugins directory, the `build/plugin` to the plugins directory, `build/theme` to the themes directory.
 - Node.js must be installed on your machine and the NODE_PATH environmental variable must be set to the location of the node.js executable.
 
-## SSR Notes && Caveats
+## SSR Notes & Caveats
 ### public/functions.php
 Context data is defined in a singleton pattern. Also, in order for ApolloGraphQL to work server side on the same machine as WordPress `127.0.0.1` has to be used instead of `localhost`. Otherwise, the an **ECONNREFUSED** error is thrown.
 ```
@@ -131,3 +131,103 @@ $app = json_decode(
   true
 );
 ```
+
+## WPGraphQL Component Notes & Caveats
+WPGraphQL-Composer is a component library relied on heavily in the root React application as see below.
+```
+  ...
+import Navbar from './nav-menu';
+import Footer from './footer';
+import Content from './content';
+  ...
+const Main = styled.main`
+  position: relative;
+  padding: 0;
+  margin: 0 auto;
+  width: 100%;
+  min-height: 100vh;
+`;
+
+export default () => (
+  <Fragment>
+    <Navbar location="MAIN" /> // MAIN is the MenuLocationEnum value for the `main` menu created in public/functions.php 
+    <Main> // Wrapper styled-component
+      <Content /> // The real main component don't let the name confuse you. I'm sorry. I suck at names XD.
+    </Main>
+    <Footer />
+  </Fragment>
+);
+```
+
+The documentation is [here](https://github.com/kidunot89/wp-graphql-composer). This library's purpose is to provide reusable logic for creating React-Apollo components served data from WPGraphQL servers. The components are all customizable in layers using the provided compose functions. The following are noteworthy comments about the components used. 
+
+### Main component ~ src/content/index.jsx
+The `Main` component is the routing component. The `view` component defined in the `compose` function is wrapper in several HOCs, *Try finding the compoent in React Devtools to see what I mean* and all necessary props. It should always be **stateless**. The `Routes` prop is a routes component. If not overwritten, the default Routes prop passed mimics the **WordPress** routing setup behind the **WPGraphQL** server by writing the permalink settings. There are a few bugs, but it works for the most part. The `archive`, `page`, and `post` props are components used in the routes corresponding with their name.
+```
+import { main } from 'wp-graphql-composer';
+  ...
+const components = { archive, page, post };
+
+const view = ({ Routes }) => (
+  <Routes {...components} /> 
+);
+
+export default main.compose({ view });
+```
+
+### Post component ~ src/content/post.jsx
+The `Post` component renders WP Post. It should be pretty self-explanatory. Also note `content`. Its `post_content` in the WP Database and stored as `HTML` string. Here it is parse and converted to React components using `react-html-parser`. It can be customized to parse components in different ways. See documentation [here](https://github.com/wrakky/react-html-parser).
+```
+  ...
+import ReactHtmlParser from 'react-html-parser';
+  ...
+
+const view = ({ postId, title, content, className, style }) => (
+  <Section id={`post-${postId}`} className={className} style={ style }>
+    <h2>{title}</h2>
+    <div className="entry-content">
+      {ReactHtmlParser(content)}
+    </div>
+  </Section>
+);
+
+export default post.compose({ view });
+```
+
+### Menu component ~ src/nav-menu/index.jsx
+import MenuItem from './menu-item';
+
+The `Menu` component render a WP Menu. There is some noise in this component, but the takeaway is the `map` call. `MenuItem` can be a **stateless** component that renders a `link`, but here I've used another composed `WPGraphQL` component `MenuItem`. This component queries for any child `items` of that menu item and can render them too *It doesn't here though*.
+```
+const view = ({ slug, items }) => {
+  const [menuOpen, toggleMenu] = useState(false);
+  const barRef = useRef(null);
+
+  const onClick = () => toggleMenu(false);
+  return (
+    <Fragment>
+      <Waypoint id={`menu-${slug}`} ref={barRef} as={PosedNavbar} className="nav" menuOpen={menuOpen}>
+        <Logo fromLeft className="logo" text />
+        <Hamburger onClick={() => toggleMenu(!menuOpen)} visible={menuOpen} />
+        <PosedMenu pose={menuOpen ? 'enter' : 'exit'}>
+          { map(
+            items,
+            ({ id, ...rest }) => <MenuItem key={id} id={id} {...rest} onClick={onClick} />,
+          )}
+        </PosedMenu>
+      </Waypoint>
+      <Overlay className="overlay" menuOpen={menuOpen} />
+    </Fragment>
+  );
+};
+
+
+export default menu.compose({
+  view,
+  whileLoading: { view: () => null },
+  forError: { view: () => null },
+});
+```
+
+## Comments
+I made this as more as showcase of possibilities of using a WPGraphQL server with WP theme functionality, instead of a simple How to use WPGraphQL client-side. I also skipped out on prop-typing *Note my eslint suppression littered across the code* because well I thought it would just add to the noise of `react-pose` and `styled-components` code and this is meant to be an example. Periodical, I may comeback and improve upon the styling, transitions, and WP theme code.
