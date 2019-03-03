@@ -21,7 +21,7 @@ An example wordpress theme that loads a React.js SPA and retrieved data from WPG
 11. Now you ready to code. Run `npm run stop-docker` in project working directory to stop and destroy docker containers.
 12. (Might be needed) If you get the **Connection Information** when trying to install plugins or import content. Do the following from the terminal in the project directory
 	1. Run `docker ps`. Make note of the container name ending in `_wordpress-node_1`.
-	2. Next run `docker exec -it XXXX_wordpress-node_ bash`. This should plugin you in the docker container at `/var/www/html`.
+	2. Next run `docker exec -it XXXXX_wordpress-node_1 bash`. This should plugin you in the docker container at `/var/www/html`.
 	3. Last run `chown -hR www-data:www-data wp-content && exit`. If you notice the permission errors flashing by, ignore them.
 
 ### Usage w/o Docker
