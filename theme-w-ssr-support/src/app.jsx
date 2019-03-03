@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import Navbar from './nav-menu';
 import Footer from './footer';
 import Content from './content';
+import Contact from './contact';
 import './index.scss';
 
 const Main = styled.main`
@@ -27,6 +28,7 @@ export default () => (
     <Navbar location="MAIN" />
     <Main>
       <Content />
+      <Contact />
     </Main>
     <Footer />
   </Fragment>

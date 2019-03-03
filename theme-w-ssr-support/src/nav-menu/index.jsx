@@ -14,8 +14,8 @@ import { menu } from 'wp-graphql-composer';
 import Logo from '../icons/logo';
 import Hamburger from '../icons/hamburger';
 import Waypoint from '../components/waypoint';
-import MenuItem from './menu-item';
-import { StyledNavbar, StyledMenu, Overlay } from './styled';
+import MenuItem, { PosedItem } from './menu-item';
+import { StyledNavbar, styledMenu, Overlay } from './styled';
 
 const PosedNavbar = posed(StyledNavbar)({
   enter: {
@@ -26,13 +26,13 @@ const PosedNavbar = posed(StyledNavbar)({
   initialPose: 'exit',
 });
 
-const PosedMenu = posed(StyledMenu)({
+const PosedMenu = styledMenu(posed.ul({
   enter: {
     delayChildren: 800,
     staggerChildren: 100,
   },
   exit: {},
-});
+}));
 
 const view = ({ slug, items }) => {
   const [menuOpen, toggleMenu] = useState(false);
@@ -49,6 +49,9 @@ const view = ({ slug, items }) => {
             items,
             ({ id, ...rest }) => <MenuItem key={id} id={id} {...rest} onClick={onClick} />,
           )}
+          <PosedItem>
+            <a href="#contact" onClick={onClick} onKeyPress={onClick}>Contact Us</a>
+          </PosedItem>
         </PosedMenu>
       </Waypoint>
       <Overlay className="overlay" menuOpen={menuOpen} />

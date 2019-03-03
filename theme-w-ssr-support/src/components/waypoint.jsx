@@ -12,7 +12,6 @@ import styled from 'styled-components';
  * Local dependencies
  */
 import colors from '../lib/colors';
-import { waitSync } from '../lib/helpers';
 
 const StyledContainer = styled.div`
   position: relative;
@@ -72,7 +71,6 @@ export default forwardRef(
         window.addEventListener('beforeunload', (event) => {
           event.preventDefault();
           setVisible(false);
-          waitSync(3000, true);
         });
         setMounted(true);
       }

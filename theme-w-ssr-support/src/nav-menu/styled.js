@@ -68,7 +68,7 @@ export const StyledNavbar = styled.nav.attrs(({ menuOpen }) => ({
   }
 `;
 
-export const StyledMenu = styled.ul`
+export const styledMenu = element => styled(element)`
   display: none;
   margin: 0;
   padding: 0.5em 1em 0.5em 0;
@@ -94,6 +94,8 @@ export const StyledItem = styled.li`
   font-weight: 500;
 
   @media screen and (min-width: 1024px) {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
     font-size: 0.6em;
     padding: 0 1em;
 

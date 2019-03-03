@@ -12,7 +12,7 @@ import { ServerStyleSheet } from 'styled-components';
  * Local dependencies
  */
 import App from '../app';
-import createClient from './create-client';
+import createClient from '../create-client';
 
 async function server({ ENDPOINT, LOCATION }) {
   const sheet = new ServerStyleSheet();

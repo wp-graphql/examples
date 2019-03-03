@@ -13,7 +13,7 @@ import { menuItem } from 'wp-graphql-composer';
  */
 import { StyledItem } from './styled';
 
-const PosedItem = posed(StyledItem)({
+export const PosedItem = posed(StyledItem)({
   enter: {
     x: 0,
     opacity: 1,

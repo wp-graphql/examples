@@ -1,4 +1,4 @@
-// client.js
+// create-client.js
 /**
  * External dependencies
  */

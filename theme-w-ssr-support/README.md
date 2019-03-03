@@ -19,6 +19,10 @@ An example wordpress theme that loads a React.js SPA and retrieved data from WPG
 9. Load or create Posts using editor or WordPress importer.
 10. Set an menu to the `main` location.
 11. Now you ready to code. Run `npm run stop-docker` in project working directory to stop and destroy docker containers.
+12. (Might be needed) If you get the **Connection Information** when trying to install plugins or import content. Do the following from the terminal in the project directory
+	i. Run `docker ps`. Make note of the container name ending in `_wordpress-node_1`.
+	ii. Next run `docker exec -it XXXX_wordpress-node_ bash`. This should plugin you in the docker container at `/var/www/html`.
+	iii. Last run `chown -hR www-data:www-data wp-content && exit`. If you notice the permission errors flashing by, ignore them.
 
 ### Usage w/o Docker
 The `link-wp` script simply symlinks links the required project directories into your Wordpress installation. The issue with this is that there is a good chance the script won't work if the user who owns the wordpress plugins and themes directories is not the same user as the one running the script like `www-data`. In situations like this you have two choices.
@@ -28,7 +32,7 @@ The `link-wp` script simply symlinks links the required project directories into
 
 ## SSR Notes & Caveats
 ### public/functions.php
-Context data is defined in a singleton pattern. Also, in order for ApolloGraphQL to work server side on the same machine as WordPress `127.0.0.1` has to be used instead of `localhost`. Otherwise, the an **ECONNREFUSED** error is thrown.
+Context data is defined in a singleton pattern. Also, in order for ApolloGraphQL to work server side on the same machine as WordPress `127.0.0.1` has to be used instead of `localhost` in local dev environments. Otherwise, the an **ECONNREFUSED** error is thrown. Another thing if you change chunk configuration in webpack be sure to update `VENDOR_SCRIPT_URI` in both the context and the `wp_graphql_enqueue_scripts` function below
 ```
 /**
  * @var app_context stores context for request
@@ -57,7 +61,8 @@ function wp_graphql_get_context( $server = false ){
 	return array_merge(
 		$app_context,
 		[
-			'ENDPOINT' => ( $server ? 'http://127.0.0.1/' : home_url( '/' ) ) . apply_filters( 'graphql_endpoint', 'graphql' ),
+			// in a local dev environment change home_url('/') to http://127.0.0.1/ and vice-versa
+			'ENDPOINT' => ( $server ? 'http://127.0.0.1/' : '/' ) . apply_filters( 'graphql_endpoint', 'graphql' ),
 		]
 	);
 }
@@ -231,3 +236,6 @@ export default menu.compose({
 
 ## Comments
 I made this as more as showcase of possibilities of using a WPGraphQL server with WP theme functionality, instead of a simple How to use WPGraphQL client-side. I also skipped out on prop-typing *Note my eslint suppression littered across the code* because well I thought it would just add to the noise of `react-pose` and `styled-components` code and this is meant to be an example. Periodical, I may comeback and improve upon the styling, transitions, and WP theme code.
+
+## One last thing
+If someone finds some security issues/concerns, please feel free to reach out to me on the WPGraphQL slack channel. - **[@kidunot89](https://github.com/kidunot89)**

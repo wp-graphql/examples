@@ -1,4 +1,4 @@
-// server.js
+// index.js
 /**
  * External dependencies
  */

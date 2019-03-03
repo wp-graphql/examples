@@ -178,7 +178,7 @@ module.exports = [
     target: 'node',
     watch,
   },
-  // Client-side
+  // Client-side JS
   {
     entry: './src/client.jsx',
     output: {

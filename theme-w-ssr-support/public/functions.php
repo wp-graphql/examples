@@ -144,13 +144,13 @@ function wp_graphql_get_context( $server = false ){
 			'CLIENT_SCRIPT_URI' 	=> get_template_directory_uri() . '/js/client.js',
 			'VENDOR_SCRIPT_URI' 	=> get_template_directory_uri() . '/js/vendors~main.client.js',
 			'STYLE_URI' 					=> get_template_directory_uri() . '/js/main.css',
-			'AJAX_URL'						=> admin_url( 'admin-ajax.php' ),
 		];
 	}
 
 	return array_merge(
 		$app_context,
 		[
+			// in a local dev environment change home_url('/') to http://127.0.0.1/ and vice-versa
 			'ENDPOINT' => ( $server ? 'http://127.0.0.1/' : home_url( '/' ) ) . apply_filters( 'graphql_endpoint', 'graphql' ),
 		]
 	);
@@ -215,3 +215,4 @@ add_filter( 'script_loader_tag', 'wp_graphql_defer_scripts', 10, 3 );
 
 require_once get_template_directory() . '/includes/core-settings-patch.php';
 require_once get_template_directory() . '/includes/schema-patch.php';
+require_once get_template_directory() . '/includes/send-inquiry-mutation.php';
