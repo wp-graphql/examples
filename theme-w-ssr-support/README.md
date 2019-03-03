@@ -20,9 +20,9 @@ An example wordpress theme that loads a React.js SPA and retrieved data from WPG
 10. Set an menu to the `main` location.
 11. Now you ready to code. Run `npm run stop-docker` in project working directory to stop and destroy docker containers.
 12. (Might be needed) If you get the **Connection Information** when trying to install plugins or import content. Do the following from the terminal in the project directory
-	i. Run `docker ps`. Make note of the container name ending in `_wordpress-node_1`.
-	ii. Next run `docker exec -it XXXX_wordpress-node_ bash`. This should plugin you in the docker container at `/var/www/html`.
-	iii. Last run `chown -hR www-data:www-data wp-content && exit`. If you notice the permission errors flashing by, ignore them.
+	1. Run `docker ps`. Make note of the container name ending in `_wordpress-node_1`.
+	2. Next run `docker exec -it XXXX_wordpress-node_ bash`. This should plugin you in the docker container at `/var/www/html`.
+	3. Last run `chown -hR www-data:www-data wp-content && exit`. If you notice the permission errors flashing by, ignore them.
 
 ### Usage w/o Docker
 The `link-wp` script simply symlinks links the required project directories into your Wordpress installation. The issue with this is that there is a good chance the script won't work if the user who owns the wordpress plugins and themes directories is not the same user as the one running the script like `www-data`. In situations like this you have two choices.
