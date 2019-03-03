@@ -11,7 +11,7 @@ $theme_version = '1.0.0';
 /**
  * @var app_context stores context for request
  */
-$wp_graphql_context = null;
+$app_context = null;
 
 /**
  * Theme constants
